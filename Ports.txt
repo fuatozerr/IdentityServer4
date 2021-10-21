@@ -1,0 +1,6 @@
+AuthServer -> https://localhost:5001;
+Client1 ->https://localhost:5006
+client2-> https://localhost:5016
+
+api1->https://localhost:5005
+api2-> https://localhost:5021
