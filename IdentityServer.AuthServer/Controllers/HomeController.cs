@@ -19,7 +19,7 @@ namespace IdentityServer.AuthServer.Controllers
         }
 
         public IActionResult Index()
-        {
+        {//test
             return View();
         }
 
