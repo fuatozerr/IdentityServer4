@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,6 +26,25 @@ namespace IdentityServer.API1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,opts=> {
+                opts.Authority = "https://localhost:44397";
+                opts.Audience = "resource_api1";
+
+            });
+
+            services.AddAuthorization(opts =>
+            {
+                opts.AddPolicy("ReadProduct", policy =>
+                {
+                    policy.RequireClaim("scope", "api1.read");
+                });
+
+                opts.AddPolicy("UpdateOrCreate", policy =>
+                {
+                    policy.RequireClaim("scope",new[] { "api1.update","api1.create" });
+
+                });
+            });
             services.AddControllers();
         }
 
@@ -39,7 +59,7 @@ namespace IdentityServer.API1
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
