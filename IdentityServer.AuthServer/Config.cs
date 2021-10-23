@@ -50,11 +50,12 @@ namespace IdentityServer.AuthServer
                 AllowedScopes= {"api1.read","api2.write","api2.update" }
                 },
                 new Client(){
-                ClientId="Client-Mvc",
+                ClientId="Client1-Mvc",
+                RequirePkce=false,
                 ClientName="Client MVC uygulama",
                 ClientSecrets=new[]{new Secret("secret".Sha256())},
                 AllowedGrantTypes=GrantTypes.Hybrid,
-                RedirectUris=new List<string> { "http://localhost:44357/sign-oidc" },
+                RedirectUris=new List<string> { "https://localhost:44357/signin-oidc" },
                 AllowedScopes= {IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile}
                 },

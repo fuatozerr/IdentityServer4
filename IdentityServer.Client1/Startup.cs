@@ -29,9 +29,10 @@ namespace IdentityServer.Client1
                 opt.DefaultChallengeScheme= "oidc";
             }).AddCookie("Cookies").AddOpenIdConnect("oidc",opts=> {
                 opts.SignInScheme = "Cookies";
-                opts.Authority = "http://localhost:44397";
+                opts.Authority = "https://localhost:44397";
                 opts.ClientId = "Client1-Mvc";
                 opts.ClientSecret = "secret";
+               // opts.RequireHttpsMetadata = false;
                 opts.ResponseType = "code id_token";
             });
             services.AddControllersWithViews();
@@ -54,7 +55,7 @@ namespace IdentityServer.Client1
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
