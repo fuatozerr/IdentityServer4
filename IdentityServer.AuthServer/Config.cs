@@ -55,13 +55,18 @@ namespace IdentityServer.AuthServer
                 ClientName="Client MVC uygulama",
                 ClientSecrets=new[]{new Secret("secret".Sha256())},
                 AllowedGrantTypes=GrantTypes.Hybrid,
-                RedirectUris=new List<string> { "https://localhost:44357/signin-oidc" },
+                RedirectUris=new List<string> { "https://localhost:44357/signin-oidc" }, //open id protolleri yüzündenmiş
                 AllowedScopes= {IdentityServerConstants.StandardScopes.OpenId,                    IdentityServerConstants.StandardScopes.Profile,"api1.read",
                   IdentityServerConstants.StandardScopes.OfflineAccess},
-                 AccessTokenLifetime=DateTime.Now.AddHours(2).Second,
+                PostLogoutRedirectUris=new List<string>
+                {
+                    "https://localhost:44357/signout-callback-oidc"
+                },
+                 AccessTokenLifetime=2*60*60,
                     AllowOfflineAccess=true,//refresh token için
                     RefreshTokenUsage=TokenUsage.ReUse, //hep kullansın
-                    AbsoluteRefreshTokenLifetime=DateTime.Now.AddDays(60).Second //kesin ömür veriyor -- 60 günlük
+                    RefreshTokenExpiration=TokenExpiration.Absolute,
+                    AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds//kesin ömür veriyor -- 60 günlük
                 },
             };
         }
