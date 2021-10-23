@@ -12,7 +12,7 @@ namespace IdentityServer.Client1.Controllers
     {
         public IActionResult Index()
         {
-
+            //User.Claims olarak alabilirsin.
             return View();
         }
     }
