@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,7 +28,10 @@ namespace IdentityServer.Client1
             {
                 opt.DefaultAuthenticateScheme = "Cookies";
                 opt.DefaultChallengeScheme= "oidc";
-            }).AddCookie("Cookies").AddOpenIdConnect("oidc",opts=> {
+            }).AddCookie("Cookies",opts=> {
+                opts.AccessDeniedPath = "/Home/AccessDenied";
+            
+            }).AddOpenIdConnect("oidc",opts=> {
                 opts.SignInScheme = "Cookies";
                 opts.Authority = "https://localhost:44397";
                 opts.ClientId = "Client1-Mvc";
@@ -37,10 +41,16 @@ namespace IdentityServer.Client1
                 opts.GetClaimsFromUserInfoEndpoint = true; //tskb için bak
                 opts.SaveTokens = true;
                 opts.Scope.Add("api1.read");
-                opts.Scope.Add("offline_access");
+                opts.Scope.Add("offline_access"); 
+                opts.Scope.Add("CountryAndCity");
+
+                opts.ClaimActions.MapUniqueJsonKey("country", "country");
+
+                opts.ClaimActions.MapUniqueJsonKey("city", "city");
 
 
-                
+
+
             });
             services.AddControllersWithViews();
         }

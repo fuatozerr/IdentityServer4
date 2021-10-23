@@ -57,17 +57,19 @@ namespace IdentityServer.AuthServer
                 AllowedGrantTypes=GrantTypes.Hybrid,
                 RedirectUris=new List<string> { "https://localhost:44357/signin-oidc" }, //open id protolleri yüzündenmiş
                 AllowedScopes= {IdentityServerConstants.StandardScopes.OpenId,                    IdentityServerConstants.StandardScopes.Profile,"api1.read",
-                  IdentityServerConstants.StandardScopes.OfflineAccess},
+                  IdentityServerConstants.StandardScopes.OfflineAccess,"CountryAndCity"},
                 PostLogoutRedirectUris=new List<string>
                 {
                     "https://localhost:44357/signout-callback-oidc"
                 },
+               // RequireConsent=true, //onay sayfasına yönelendiri.
                  AccessTokenLifetime=2*60*60,
                     AllowOfflineAccess=true,//refresh token için
                     RefreshTokenUsage=TokenUsage.ReUse, //hep kullansın
                     RefreshTokenExpiration=TokenExpiration.Absolute,
                     AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds//kesin ömür veriyor -- 60 günlük
                 },
+                
             };
         }
 
@@ -77,6 +79,7 @@ namespace IdentityServer.AuthServer
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResource(){Name ="CountryAndCity",DisplayName="Ülke ve Şehir Bilgisi",Description="Kullanıcının bilgileri",UserClaims=new[]{ "country","city"} }
             };
 
         }
@@ -86,6 +89,9 @@ namespace IdentityServer.AuthServer
             return new List<TestUser>() {
             new TestUser {SubjectId="1",Username="ozerfa",Password="password",Claims=new List<Claim>(){
             new Claim("given_name","fuat"),
+                        new Claim("country","Türkiye"),
+            new Claim("city","İstanbul"),
+
             new Claim("family_name","ozer")
             } } ,
             new TestUser {SubjectId="2",Username="ozerfatih",Password="password",Claims=new List<Claim>(){
