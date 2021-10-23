@@ -34,6 +34,7 @@ namespace IdentityServer.Client1
                 opts.ClientSecret = "secret";
                // opts.RequireHttpsMetadata = false;
                 opts.ResponseType = "code id_token";
+                opts.GetClaimsFromUserInfoEndpoint = true; //tskb için bak
             });
             services.AddControllersWithViews();
         }
