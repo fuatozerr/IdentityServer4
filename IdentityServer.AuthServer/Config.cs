@@ -56,7 +56,8 @@ namespace IdentityServer.AuthServer
                 ClientSecrets=new[]{new Secret("secret".Sha256())},
                 AllowedGrantTypes=GrantTypes.Hybrid,
                 RedirectUris=new List<string> { "https://localhost:44357/signin-oidc" },
-                AllowedScopes= {IdentityServerConstants.StandardScopes.OpenId,                    IdentityServerConstants.StandardScopes.Profile,"api.read",IdentityServerConstants.StandardScopes.OfflineAccess},
+                AllowedScopes= {IdentityServerConstants.StandardScopes.OpenId,                    IdentityServerConstants.StandardScopes.Profile,"api1.read",
+                  IdentityServerConstants.StandardScopes.OfflineAccess},
                  AccessTokenLifetime=DateTime.Now.AddHours(2).Second,
                     AllowOfflineAccess=true,//refresh token için
                     RefreshTokenUsage=TokenUsage.ReUse, //hep kullansın
